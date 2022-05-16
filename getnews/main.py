@@ -16,6 +16,9 @@ def get_all_articles(*args):
     return all_articles
 
 
+
+
+
 @app.lib.cron()
 def main(event):
     sender_address = 'utkarsh.py.automation@gmail.com'
@@ -29,6 +32,7 @@ def main(event):
     message['Subject'] = 'Daily news feed'
 
     start_date=datetime.today().strftime('%Y-%m-%d')
+    # add more endpoints to customize the type of news
 
     endpoint_top_headlines="https://newsapi.org/v2/top-headlines"
     endpoint_query="https://newsapi.org/v2/everything"
@@ -47,9 +51,9 @@ def main(event):
 
     message.attach(MIMEText(mail_body, 'plain'))
     text=message.as_string()
-    session = smtplib.SMTP('smtp.gmail.com', 587) 
-    session.starttls() 
-    session.login(sender_address,sender_pass) 
+    session = smtplib.SMTP('smtp.gmail.com', 587)
+    session.starttls()
+    session.login(sender_address,sender_pass)
     session.sendmail(sender_address,receiver_address,text)
     session.quit()
 
